@@ -15,21 +15,29 @@ int main(int argc, char** argv)
 {
     Area mapa;      //Deklaracja mapy
     FILE* plik;     //Deklaracja zmiennej typu FILE na pliki wejscia/wyjscia
-    Player* gracz;  //Deklaracja parametrów gracza
+    Players gracze;  //Deklaracja tablicy graczy
 
-    otworz_plik(argc, argv, &plik, INPUT, &mapa, &gracz);       //Otwiera plik wejsciowy
-    wczytaj_rozmiary_tablicy(&mapa, &plik, &gracz);             //Wczytuje parametry tablicy
-    przydziel(&mapa, &gracz);                                   //Alokuje pamiec do tablic
+    otworz_plik(&mapa, &gracze, &plik, INPUT, argc, argv);       //Otwiera plik wejsciowy
+    wczytaj_rozmiary_tablicy(&mapa, &gracze, &plik);             //Wczytuje parametry tablicy
+    przydziel(&mapa, &gracze);                                   //Alokuje pamiec do tablic
+    wczytaj_dane_tablicy(&mapa, &gracze, &plik);                 //Wczytuje pozostale dane
+    zamknij_plik(&plik);                                         //Zamyka plik wejsciowy
 
-    wczytaj_dane_tablicy(&mapa, &gracz, &plik);                        //Wczytuje pozostale dane
-    for(int i = 0; i < MAX_PLAYERS; i++)
+    otworz_plik(&mapa, &gracze, &plik, OUTPUT, argc, argv);       //Otwiera plik wejsciowy
+    zapisz_plik(&mapa, &gracze, &plik);
+    zamknij_plik(&plik);    //Zamyka plik wejsciowy
+
+
+
+
+  /*  for(int i = 0; i < MAX_PLAYERS; i++)
     {
-        printf("%d %d %d\n", gracz[i].numer, gracz[i].punkty, gracz[i].nazwa_gracza[i]);
+        printf("%d %d %d\n", gracze[i].numer, gracze[i].punkty, gracze[i].nazwa_gracza[i]);
     }
-    zamknij_plik(&plik);
+
 
     //Zwalnia pamiec
     printf("coo.avi\n");
-    zwolnij(&mapa, &gracz);
+    zwolnij(&mapa, &gracze);*/
     return 0;
 }
