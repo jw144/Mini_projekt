@@ -42,6 +42,11 @@ void wczytaj_rozmiary_tablicy(Area* mapa, Players* gracze, FILE** plik)
         program_error(mapa, gracze, BAD_SIZES, WRONG_DATA);
         return;
     }
+    if(mapa->m < 0 && mapa->n < 0)
+    {
+        program_error(mapa, gracze, BAD_SIZES, WRONG_DATA);
+        return;
+    }
     usun_puste(mapa, gracze, plik);
     return;
 }
@@ -50,43 +55,50 @@ void wczytaj_rozmiary_tablicy(Area* mapa, Players* gracze, FILE** plik)
 void wczytaj_dane_tablicy(Area* mapa, Players* gracze, FILE** plik)
 {
     wczytaj_plansze(mapa, gracze, plik);
- /*   int ch;
+    int ch;
     int idx = 0;
-    int wiersz = -1;
+    int temp = 1;
+    gracze->num_of_players = -1;
+    przydziel_player(mapa, gracze);
+
     do
     {
         ch = fgetc(*plik);
-        wiersz++;
+        gracze->num_of_players++;
+        przydziel_nazwa(mapa, gracze);
         idx = 0;
         do
         {
-            czy_poprawny_znak(ch, &isgraph, mapa, gracz);
-            (*gracz)[wiersz].nazwa_gracza[idx] = ch;
+            czy_poprawny_znak(mapa, gracze, ch, &isgraph);
+            gracze->parameters[gracze->num_of_players].nazwa_gracza[idx] = ch;
             idx++;
-            if()
+            temp = 1;
+            if(temp * SIZE_PLAYER_NAME - 2 < idx)
             {
-                zrobiæ w³asnego stringa
+                temp++;
+              realloc_nazwa(mapa, gracze, temp);
             }
             ch = fgetc(*plik);
         }while(ch != ' ');
+        gracze->parameters[gracze->num_of_players].nazwa_gracza[idx] = '\0';
         ch = fgetc(*plik);
-        czy_poprawny_znak(ch, &isdigit, mapa, gracz);
-        (*gracz)[wiersz].numer = ch - '0';
+        czy_poprawny_znak(mapa, gracze, ch, &isdigit);
+        gracze->parameters[gracze->num_of_players].numer = ch - '0';
         ch = fgetc(*plik);
-        czy_poprawny_znak(ch, &isspace, mapa, gracz);
+        czy_poprawny_znak(mapa, gracze, ch, &isspace);
         ch = fgetc(*plik);
-        (*gracz)[wiersz].punkty = 0;
+        gracze->parameters[gracze->num_of_players].punkty = 0;
         do
         {
-            czy_poprawny_znak(ch, &isdigit, mapa, gracz);
-            (*gracz)[wiersz].punkty = (*gracz)[wiersz].punkty * 10 + ch - '0';
+            czy_poprawny_znak(mapa, gracze, ch, &isdigit);
+            gracze->parameters[gracze->num_of_players].punkty = gracze->parameters[gracze->num_of_players].punkty * 10 + ch - '0';
             ch = fgetc(*plik);
         }while(ch >= '0' && ch <= '9');
         if(ch != '\n' && ch != EOF)
         {
             usun_puste(mapa, gracze, plik);
         }
-    }while(ch != EOF);*/
+    }while(ch != EOF);
     return;
 }
 
@@ -143,9 +155,8 @@ void czy_poprawny_znak(Area* mapa, Players* gracze, int ch, int (*znak) (int ch)
 {
     if(znak(ch) == 0)
     {
-        fprintf(stderr, "Blad danych planszy\n");
-        zwolnij(mapa, gracze);
-        exit(2);
+        program_error(mapa, gracze, BAD_INPUT, WRONG_DATA);
+        return;
     }
     return;
 }
@@ -161,6 +172,10 @@ void zapisz_plik(Area* mapa, Players* gracze, FILE** plik)
             fprintf(*plik, " %d%d", mapa->tab[i][j].ryby, mapa->tab[i][j].gracz);
         }
         fprintf(*plik, "\n");
+    }
+    for(int i = 0; i <= gracze->num_of_players; i++)
+    {
+        fprintf(*plik, "%s %d %d\n", gracze->parameters[i].nazwa_gracza, gracze->parameters[i].numer, gracze->parameters[i].punkty);
     }
     return;
 }

@@ -26,7 +26,7 @@ void przydziel_area(Area* mapa, Players* gracze);
     \param mapa Mapa z rybami
     \param gracze Parametry gracza
 */
-void przydziel_player(Area* mapa, Players* gracze);
+void przydziel_players(Area* mapa, Players* gracze);
 
 /*! \fn void zwolnij(Area* mapa, Player* gracz)
     \brief Zwalnia pamiec
@@ -45,7 +45,7 @@ void zwolnij_area(Area* mapa);
     \brief Zwalnia pamiec z tablicy z graczami
     \param gracze Parametry gracza
 */
-void zwolnij_player(Players* gracze);
+void zwolnij_players(Players* gracze);
 
 /*! \fn void program_error(Area* mapa, Players* gracze, char* message, int error_number)
     \brief Wypisuje blad i konczy program
@@ -55,5 +55,11 @@ void zwolnij_player(Players* gracze);
     \param error_number Kod bledu
 */
 void program_error(Area* mapa, Players* gracze, char* message, int error_number);
+
+void przydziel_player(Area* mapa, Players* gracze);
+
+void przydziel_nazwa(Area* mapa, Players* gracze);
+
+void realloc_nazwa(Area* mapa, Players* gracze, int temp);
 
 #endif // MEMORY_HANDLING_H_

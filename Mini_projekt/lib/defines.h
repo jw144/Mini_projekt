@@ -56,7 +56,7 @@ typedef struct players
     int num_of_players;
 
     //!Parametry gracza
-    char* parameters;
+    Parameters* parameters;
 }Players;
 
 /*! \def SIZE_PLAYER_NAME

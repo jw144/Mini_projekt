@@ -65,9 +65,21 @@ void wczytaj_plansze(Area* mapa, Players* gracze, FILE** plik);
 void usun_puste(Area* mapa, Players* gracze, FILE** plik);
 
 
+/*! \fn void czy_poprawny_znak(Area* mapa, Players* gracze, int ch, int (*znak) (int ch))
+    \brief Sprawdza poprawnosc znaku
+    \param mapa Mapa z rybami
+    \param gracze Tablica z graczami
+    \param ch Sprawdzany znak
+    \param (*znak) (int ch) Odpowiednia funkcja sprawdzajaca
+*/
 void czy_poprawny_znak(Area* mapa, Players* gracze, int ch, int (*znak) (int ch));
 
-
+/*! \fn void zapisz_plik(Area* mapa, Players* gracze, FILE** plik)
+    \brief Zapisuje Mape i graczy do pliku
+    \param mapa Mapa z rybami
+    \param gracze Tablica z graczami
+    \param plik Wskaznik na plik, do ktorego wczytujemy/zapisujemy
+*/
 void zapisz_plik(Area* mapa, Players* gracze, FILE** plik);
 
 #endif // R_W_FUNC_H_

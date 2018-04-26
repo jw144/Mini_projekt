@@ -30,14 +30,7 @@ int main(int argc, char** argv)
 
 
 
-  /*  for(int i = 0; i < MAX_PLAYERS; i++)
-    {
-        printf("%d %d %d\n", gracze[i].numer, gracze[i].punkty, gracze[i].nazwa_gracza[i]);
-    }
 
-
-    //Zwalnia pamiec
-    printf("coo.avi\n");
-    zwolnij(&mapa, &gracze);*/
+    zwolnij(&mapa, &gracze);
     return 0;
 }
