@@ -6,29 +6,21 @@
 #include "../lib/defines.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
-/*! \fn void przydziel(Area* mapa, Player* gracz)
-    \brief Przydziela pamiec do tablic
-    \param mapa Mapa z rybami
-    \param gracz Parametry gracza
-*/
-void przydziel(Area* mapa, Player* gracz)
+void przydziel(Area* mapa, Player** gracz)
 {
-    przydziel_area(mapa);
-    przydziel_player(gracz);
+    przydziel_area(mapa, gracz);
+    przydziel_player(gracz, mapa);
     return;
 }
 
-/*! \fn void przydziel_area(Area* mapa)
-    \brief Przydziela pamiec do tablicy z rybami
-    \param mapa Mapa z rybami
-*/
-void przydziel_area(Area* mapa)
+void przydziel_area(Area* mapa, Player** gracz)
 {
     mapa->tab = malloc(sizeof(Tile*) * mapa->m);
     if(mapa->tab == NULL)
     {
-        free(mapa->tab);
+        zwolnij(mapa, gracz);
         exit(3);
     }
     for(int i = 0; i < mapa->m; i++)
@@ -36,36 +28,56 @@ void przydziel_area(Area* mapa)
         mapa->tab[i] = malloc(sizeof(Tile) * mapa->n);
         if(mapa->tab[i] == NULL)
         {
-            free(mapa->tab);
+            zwolnij(mapa, gracz);
             exit(3);
         }
     }
     return;
 }
 
-/*! \fn void przydziel_player(Player* gracz)
-    \brief Przydziela pamiec do tablicy z nazwa gracza
-    \param gracz Parametry gracza
-*/
-void przydziel_player(Player* gracz)
+void przydziel_player(Player** gracz, Area* mapa)
 {
-    gracz->nazwa_gracza = malloc(sizeof(char) * SIZE_PLAYER_NAME);
-    if(gracz->nazwa_gracza == NULL)
+    *gracz = malloc(sizeof(Player*) * MAX_PLAYERS);
+    if(*gracz == NULL)
     {
-        free(gracz->nazwa_gracza);
+        zwolnij(mapa, gracz);
         exit(3);
+    }
+    for(int i = 0; i < MAX_PLAYERS; i++)
+    {
+        (*gracz)[i].nazwa_gracza = malloc(sizeof(char*) * SIZE_PLAYER_NAME);
+        if((*gracz)[i].nazwa_gracza == NULL)
+        {
+            zwolnij(mapa, gracz);
+            exit(3);
+        }
     }
     return;
 }
 
-/*! \fn void zwolnij(Area* mapa, Player* gracz)
-    \brief Zwalnia pamiec
-    \param mapa Mapa z rybami
-    \param gracz Parametry gracza
-*/
-void zwolnij(Area* mapa, Player* gracz)
+void zwolnij(Area* mapa, Player** gracz)
 {
+ //   zwolnij_area(mapa);
+ //   zwolnij_player(gracz);
+    return;
+}
+
+void zwolnij_area(Area* mapa)
+{
+    for(int i = 0; i < mapa->m; i++)
+    {
+        free(mapa->tab[i]);
+    }
     free(mapa->tab);
-    free(gracz->nazwa_gracza);
+    return;
+}
+
+void zwolnij_player(Player** gracz)
+{
+    for(int i = 0; i < MAX_PLAYERS; i++)
+    {
+        free((*gracz)[i].nazwa_gracza);
+    }
+    free(*gracz);
     return;
 }

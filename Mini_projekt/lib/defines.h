@@ -53,4 +53,15 @@ typedef struct player
 */
 #define SIZE_PLAYER_NAME 20
 
+#define MAX_PLAYERS 9
+
+#define MAX_INPUT_ARGUMENTS 5
+
+#define INPUT 0
+
+#define READ_SYMBOL "r"
+
+#define WRITE_SYMBOL "w"
+
+
 #endif // DEFINES_H_
