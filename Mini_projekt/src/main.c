@@ -17,20 +17,15 @@ int main(int argc, char** argv)
     FILE* plik;     //Deklaracja zmiennej typu FILE na pliki wejscia/wyjscia
     Players gracze;  //Deklaracja tablicy graczy
 
-    otworz_plik(&mapa, &gracze, &plik, INPUT, argc, argv);       //Otwiera plik wejsciowy
-    wczytaj_rozmiary_tablicy(&mapa, &gracze, &plik);             //Wczytuje parametry tablicy
-    przydziel(&mapa, &gracze);                                   //Alokuje pamiec do tablic
-    wczytaj_dane_tablicy(&mapa, &gracze, &plik);                 //Wczytuje pozostale dane
-    zamknij_plik(&plik);                                         //Zamyka plik wejsciowy
+    otworz_plik(&mapa, &gracze, &plik, INPUT, argc, argv);  //Otwiera plik wejsciowy
+    wczytaj_rozmiary_tablicy(&mapa, &gracze, &plik);        //Wczytuje parametry tablicy
+    przydziel(&mapa, &gracze);                              //Alokuje pamiec do tablic
+    wczytaj_dane_tablicy(&mapa, &gracze, &plik);            //Wczytuje pozostale dane
+    zamknij_plik(&plik);                                    //Zamyka plik wejsciowy
 
-    otworz_plik(&mapa, &gracze, &plik, OUTPUT, argc, argv);       //Otwiera plik wejsciowy
-    zapisz_plik(&mapa, &gracze, &plik);
-    zamknij_plik(&plik);    //Zamyka plik wejsciowy
-
-
-
-
-
-    zwolnij(&mapa, &gracze);
+    otworz_plik(&mapa, &gracze, &plik, OUTPUT, argc, argv); //Otwiera plik wejsciowy
+    zapisz_plik(&mapa, &gracze, &plik);                     //Zapisuje dane do pliku
+    zamknij_plik(&plik);                                    //Zamyka plik wejsciowy
+    zwolnij(&mapa, &gracze);                                //Zwalnia pamiec
     return 0;
 }

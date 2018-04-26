@@ -11,7 +11,7 @@
 void przydziel(Area* mapa, Players* gracze)
 {
     przydziel_area(mapa, gracze);
-    przydziel_player(mapa, gracze);
+    przydziel_players(mapa, gracze);
     return;
 }
 
@@ -67,7 +67,7 @@ void zwolnij_players(Players* gracze)
 {
     for(int i = 0; i < gracze->num_of_players; i++)
     {
-        free(gracze->parameters[gracze->num_of_players].nazwa_gracza);
+        free(gracze->parameters[i].nazwa_gracza);
     }
     free(gracze->parameters);
     return;
@@ -78,17 +78,6 @@ void program_error(Area* mapa, Players* gracze, char* message, int error_number)
     zwolnij(mapa, gracze);
     fprintf(stderr, "%s\n", message);
     exit(error_number);
-    return;
-}
-
-void przydziel_player(Area* mapa, Players* gracze)
-{
-    gracze->parameters = malloc(sizeof(Parameters*) * MAX_PLAYERS);
-    if(gracze->parameters == NULL)
-    {
-        program_error(mapa, gracze, BAD_ALLOCATION, PROGRAM_ERROR);
-        return;
-    }
     return;
 }
 

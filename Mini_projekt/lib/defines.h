@@ -74,11 +74,19 @@ typedef struct players
 */
 #define MAX_INPUT_ARGUMENTS 5
 
+/*! \def MAX_NUM_OF_FISH
+    \brief Definiuje maksymalna ilosc ryb
+*/
+#define MAX_NUM_OF_FISH 3
+
 /*! \def INPUT
     \brief Definiuje liczbe dla pliku wejsciowego
 */
 #define INPUT 0
 
+/*! \def OUTPUT
+    \brief Definiuje liczbe dla pliku wyjsciowego
+*/
 #define OUTPUT 1
 
 /*! \def READ_SYMBOL
@@ -91,17 +99,34 @@ typedef struct players
 */
 #define WRITE_SYMBOL "w"
 
+/*! \def WRONG_DATA
+    \brief Definiuje kod bledu dla zlych danych
+*/
 #define WRONG_DATA 2
 
+/*! \def PROGRAM_ERROR
+    \brief Definiuje kod bledu dla bledu programu
+*/
 #define PROGRAM_ERROR 3
 
+/*! \def BAD_LOADING
+    \brief Definiuje wiadomosc w przypadku bledu otwarcia pliku
+*/
 #define BAD_LOADING "Nie mozna otworzyc pliku"
 
+/*! \def BAD_SIZES
+    \brief Definiuje wiadomosc w przypadku blednych rozmiarow planszy
+*/
 #define BAD_SIZES "Blad wczytywania rozmiarow planszy"
 
-#define BAD_INPUT "Blad danych w tablicy"
+/*! \def BAD_INPUT
+    \brief Definiuje wiadomosc w przypadku blednych danych
+*/
+#define BAD_INPUT "Blad danych"
 
+/*! \def BAD_ALLOCATION
+    \brief Definiuje wiadomosc w przypadku nie zaalokowania pamieci
+*/
 #define BAD_ALLOCATION "Nie mozna zaalokowac pamieci"
-
 
 #endif // DEFINES_H_

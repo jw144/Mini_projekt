@@ -56,6 +56,26 @@ void wczytaj_dane_tablicy(Area* mapa, Players* gracze, FILE** plik);
 */
 void wczytaj_plansze(Area* mapa, Players* gracze, FILE** plik);
 
+/*! \fn void wczytaj_plansze_gracz(Area* mapa, Players* gracze, FILE** plik, int i, int j)
+    \brief Wczytuje numer gracza w komorce
+    \param mapa Mapa z rybami
+    \param gracze Tablica z graczami
+    \param plik Wskaznik na plik, do ktorego wczytujemy/zapisujemy
+    \param i Pozycja m na planszy
+    \param j Pozycja n na planszy
+*/
+void wczytaj_plansze_gracz(Area* mapa, Players* gracze, FILE** plik, int i, int j);
+
+/*! \fn void wczytaj_plansze_ryba(Area* mapa, Players* gracze, FILE** plik, int i, int j)
+    \brief Wczytuje ilosc ryb w komorce
+    \param mapa Mapa z rybami
+    \param gracze Tablica z graczami
+    \param plik Wskaznik na plik, do ktorego wczytujemy/zapisujemy
+    \param i Pozycja m na planszy
+    \param j Pozycja n na planszy
+*/
+void wczytaj_plansze_ryba(Area* mapa, Players* gracze, FILE** plik, int i, int j);
+
 /*! \fn void usun_puste(Area* mapa, Players* gracze, FILE** plik)
     \brief Usuwa puste znaki w linii
     \param mapa Mapa z rybami
@@ -64,6 +84,14 @@ void wczytaj_plansze(Area* mapa, Players* gracze, FILE** plik);
 */
 void usun_puste(Area* mapa, Players* gracze, FILE** plik);
 
+/*! \fn void wczytaj_graczy(Area* mapa, Players* gracze, FILE** plik)
+    \brief Wczytuje dane graczy
+    \param mapa Mapa z rybami
+    \param gracze Tablica z graczami
+    \param plik Wskaznik na plik, do ktorego wczytujemy/zapisujemy
+
+*/
+void wczytaj_graczy(Area* mapa, Players* gracze, FILE** plik);
 
 /*! \fn void czy_poprawny_znak(Area* mapa, Players* gracze, int ch, int (*znak) (int ch))
     \brief Sprawdza poprawnosc znaku

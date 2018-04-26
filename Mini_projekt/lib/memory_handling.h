@@ -21,8 +21,8 @@ void przydziel(Area* mapa, Players* gracze);
 */
 void przydziel_area(Area* mapa, Players* gracze);
 
-/*! \fn void przydziel_player(Area* mapa, Players* gracze)
-    \brief Przydziela pamiec do tablicy z nazwa gracza
+/*! \fn void przydziel_players(Area* mapa, Players* gracze)
+    \brief Przydziela pamiec do tablicy z graczami
     \param mapa Mapa z rybami
     \param gracze Parametry gracza
 */
@@ -56,10 +56,19 @@ void zwolnij_players(Players* gracze);
 */
 void program_error(Area* mapa, Players* gracze, char* message, int error_number);
 
-void przydziel_player(Area* mapa, Players* gracze);
-
+/*! \fn void przydziel_nazwa(Area* mapa, Players* gracze)
+    \brief Przydziela pamiec do tablicy z nazwa gracza
+    \param mapa Mapa z rybami
+    \param gracze Parametry gracza
+*/
 void przydziel_nazwa(Area* mapa, Players* gracze);
 
+/*! \fn void realloc_nazwa(Area* mapa, Players* gracze, int temp)
+    \brief Zmienia wielkosc tablicy z nazwa gracza
+    \param mapa Mapa z rybami
+    \param gracze Parametry gracza
+    \param temp Mnoznik zwiekszania nazwy
+*/
 void realloc_nazwa(Area* mapa, Players* gracze, int temp);
 
 #endif // MEMORY_HANDLING_H_

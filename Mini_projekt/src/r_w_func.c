@@ -55,22 +55,77 @@ void wczytaj_rozmiary_tablicy(Area* mapa, Players* gracze, FILE** plik)
 void wczytaj_dane_tablicy(Area* mapa, Players* gracze, FILE** plik)
 {
     wczytaj_plansze(mapa, gracze, plik);
+    wczytaj_graczy(mapa, gracze, plik);
+    return;
+}
+
+void wczytaj_plansze(Area* mapa, Players* gracze, FILE** plik)
+{
+    int ch;
+    for(int i = 0; i < mapa->m; i++)
+    {
+        wczytaj_plansze_ryba(mapa, gracze, plik, i, 0);
+        wczytaj_plansze_gracz(mapa, gracze, plik, i, 0);
+
+        for(int j = 1; j < mapa->n; j++)
+        {
+
+            ch = fgetc(*plik);
+            czy_poprawny_znak(mapa, gracze, ch, &isspace);  //Usuwa spacje pomiedzy danymi i sprawdza czy to spacja
+
+            wczytaj_plansze_ryba(mapa, gracze, plik, i, j);
+            wczytaj_plansze_gracz(mapa, gracze, plik, i, j);
+        }
+        usun_puste(mapa, gracze, plik);
+    }
+    return;
+}
+void wczytaj_plansze_gracz(Area* mapa, Players* gracze, FILE** plik, int i, int j)
+{
+    int ch;
+    ch = fgetc(*plik);
+    czy_poprawny_znak(mapa, gracze, ch, &isdigit);
+    mapa->tab[i][j].gracz = ch - '0';
+    return;
+}
+
+void wczytaj_plansze_ryba(Area* mapa, Players* gracze, FILE** plik, int i, int j)
+{
+    int ch;
+    ch = fgetc(*plik);
+    czy_poprawny_znak(mapa, gracze, ch, &isdigit);
+    mapa->tab[i][j].ryby = ch - '0';
+    if(mapa->tab[i][j].ryby > MAX_NUM_OF_FISH)
+    {
+        program_error(mapa, gracze, BAD_INPUT, WRONG_DATA);
+        return;
+    }
+    return;
+}
+
+void wczytaj_graczy(Area* mapa, Players* gracze, FILE** plik)
+{
     int ch;
     int idx = 0;
     int temp = 1;
     gracze->num_of_players = -1;
-    przydziel_player(mapa, gracze);
-
     do
     {
         ch = fgetc(*plik);
         gracze->num_of_players++;
+        if(gracze->num_of_players > 9) //Sprawdzenie ilosci graczy
+        {
+            program_error(mapa, gracze, BAD_INPUT, WRONG_DATA);
+            return;
+        }
+
         przydziel_nazwa(mapa, gracze);
         idx = 0;
         do
         {
             czy_poprawny_znak(mapa, gracze, ch, &isgraph);
             gracze->parameters[gracze->num_of_players].nazwa_gracza[idx] = ch;
+
             idx++;
             temp = 1;
             if(temp * SIZE_PLAYER_NAME - 2 < idx)
@@ -81,11 +136,14 @@ void wczytaj_dane_tablicy(Area* mapa, Players* gracze, FILE** plik)
             ch = fgetc(*plik);
         }while(ch != ' ');
         gracze->parameters[gracze->num_of_players].nazwa_gracza[idx] = '\0';
+
         ch = fgetc(*plik);
         czy_poprawny_znak(mapa, gracze, ch, &isdigit);
         gracze->parameters[gracze->num_of_players].numer = ch - '0';
+
         ch = fgetc(*plik);
         czy_poprawny_znak(mapa, gracze, ch, &isspace);
+
         ch = fgetc(*plik);
         gracze->parameters[gracze->num_of_players].punkty = 0;
         do
@@ -94,43 +152,13 @@ void wczytaj_dane_tablicy(Area* mapa, Players* gracze, FILE** plik)
             gracze->parameters[gracze->num_of_players].punkty = gracze->parameters[gracze->num_of_players].punkty * 10 + ch - '0';
             ch = fgetc(*plik);
         }while(ch >= '0' && ch <= '9');
+
         if(ch != '\n' && ch != EOF)
         {
             usun_puste(mapa, gracze, plik);
         }
     }while(ch != EOF);
     return;
-}
-
-void wczytaj_plansze(Area* mapa, Players* gracze, FILE** plik)
-{
-    int ch;
-    for(int i = 0; i < mapa->m; i++)
-    {
-        ch = fgetc(*plik);
-        czy_poprawny_znak(mapa, gracze, ch, &isdigit);
-        mapa->tab[i][0].ryby = ch - '0';
-
-        ch = fgetc(*plik);
-        czy_poprawny_znak(mapa, gracze, ch, &isdigit);
-        mapa->tab[i][0].gracz = ch - '0';
-
-        for(int j = 1; j < mapa->n; j++)
-        {
-
-            ch = fgetc(*plik);
-            czy_poprawny_znak(mapa, gracze, ch, &isspace);  //Usuwa spacje pomiedzy danymi i sprawdza czy to spacja
-
-            ch = fgetc(*plik);
-            czy_poprawny_znak(mapa, gracze, ch, &isdigit);
-            mapa->tab[i][j].ryby = ch - '0';
-
-            ch = fgetc(*plik);
-            czy_poprawny_znak(mapa, gracze, ch, &isdigit);
-            mapa->tab[i][j].gracz = ch - '0';
-        }
-        usun_puste(mapa, gracze, plik);
-    }
 }
 
 void usun_puste(Area* mapa, Players* gracze, FILE** plik)
