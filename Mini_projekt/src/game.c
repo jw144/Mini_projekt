@@ -118,6 +118,11 @@ Parameters* czy_jest_gracz(Area* mapa, Players* gracze, int phase)
     if(My == NULL)
     {
         gracze->num_of_players++;
+        if(gracze->num_of_players > 10)
+        {
+            program_error(mapa, gracze, BAD_INPUT, WRONG_DATA);
+            return NULL;
+        }
         Parameters* temp = realloc(gracze->parameters, (gracze->num_of_players) * sizeof(Parameters));
         if(temp == NULL)
         {
