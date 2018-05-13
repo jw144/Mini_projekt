@@ -5,6 +5,7 @@
 #include "../lib/defines.h"
 #include "../lib/r_w_func.h"
 #include "../lib/memory_handling.h"
+#include "../lib/game.h"
 #include <stdio.h>
 
 
@@ -22,6 +23,8 @@ int main(int argc, char** argv)
     przydziel(&mapa, &gracze);                              //Alokuje pamiec do tablic
     wczytaj_dane_tablicy(&mapa, &gracze, &plik);            //Wczytuje pozostale dane
     zamknij_plik(&plik);                                    //Zamyka plik wejsciowy
+
+    wybor_trybu(&mapa, &gracze, argc, argv);                //Wybiera tryb gry i uruchamia ja
 
     otworz_plik(&mapa, &gracze, &plik, OUTPUT, argc, argv); //Otwiera plik wejsciowy
     zapisz_plik(&mapa, &gracze, &plik);                     //Zapisuje dane do pliku

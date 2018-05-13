@@ -37,7 +37,7 @@ void przydziel_area(Area* mapa, Players* gracze)
 
 void przydziel_players(Area* mapa, Players* gracze)
 {
-    gracze->parameters = malloc(sizeof(Players) * MAX_PLAYERS);
+    gracze->parameters = malloc(sizeof(Parameters) * MAX_PLAYERS);
     if(gracze->parameters == NULL)
     {
         program_error(mapa, gracze, BAD_ALLOCATION, PROGRAM_ERROR);
@@ -83,8 +83,8 @@ void program_error(Area* mapa, Players* gracze, char* message, int error_number)
 
 void przydziel_nazwa(Area* mapa, Players* gracze)
 {
-    gracze->parameters[gracze->num_of_players].nazwa_gracza = malloc(sizeof(char) * SIZE_PLAYER_NAME);
-    if(gracze->parameters[gracze->num_of_players].nazwa_gracza == NULL)
+    gracze->parameters[gracze->num_of_players - 1].nazwa_gracza = malloc(sizeof(char) * SIZE_PLAYER_NAME);
+    if(gracze->parameters[gracze->num_of_players - 1].nazwa_gracza == NULL)
     {
         program_error(mapa, gracze, BAD_ALLOCATION, PROGRAM_ERROR);
         return;
@@ -94,8 +94,8 @@ void przydziel_nazwa(Area* mapa, Players* gracze)
 
 void realloc_nazwa(Area* mapa, Players* gracze, int temp)
 {
-    char* temp_tab = gracze->parameters[gracze->num_of_players].nazwa_gracza;
-    temp_tab = realloc(gracze->parameters[gracze->num_of_players].nazwa_gracza, sizeof(char) * SIZE_PLAYER_NAME * temp);
+    char* temp_tab = gracze->parameters[gracze->num_of_players - 1].nazwa_gracza;
+    temp_tab = realloc(gracze->parameters[gracze->num_of_players - 1].nazwa_gracza, sizeof(char) * SIZE_PLAYER_NAME * temp);
     if(temp_tab == NULL)
     {
         program_error(mapa, gracze, BAD_ALLOCATION, PROGRAM_ERROR);
@@ -103,7 +103,7 @@ void realloc_nazwa(Area* mapa, Players* gracze, int temp)
     }
     else
     {
-        gracze->parameters[gracze->num_of_players].nazwa_gracza = temp_tab;
+        gracze->parameters[gracze->num_of_players - 1].nazwa_gracza = temp_tab;
     }
     return;
 }

@@ -59,6 +59,18 @@ typedef struct players
     Parameters* parameters;
 }Players;
 
+/*!
+    \brief Typedef struktury pary liczb ukladu kartezjanskiego
+*/
+typedef struct par
+{
+    //!Wspolrzedna x
+    int x;
+
+    //!Wspolrzedna y
+    int y;
+}Par;
+
 /*! \def SIZE_PLAYER_NAME
     \brief Definiuje tymczasowa dlugosc nazwy gracza
 */
@@ -99,6 +111,11 @@ typedef struct players
 */
 #define WRITE_SYMBOL "w"
 
+/*! \def NO_MOVES
+    \brief Definiuje kod dla braku ruchu
+*/
+#define NO_MOVES 1
+
 /*! \def WRONG_DATA
     \brief Definiuje kod bledu dla zlych danych
 */
@@ -128,5 +145,25 @@ typedef struct players
     \brief Definiuje wiadomosc w przypadku nie zaalokowania pamieci
 */
 #define BAD_ALLOCATION "Nie mozna zaalokowac pamieci"
+
+/*! \def PHASE_PLACEMENT
+    \brief Definiuje lancuch z komenda placement
+*/
+#define PHASE_PLACEMENT "phase=placement"
+
+/*! \def MAX_AREA_WIN_X
+    \brief Definiuje maksymalna wysokosc okna
+*/
+#define MAX_AREA_WIN_X 21
+
+/*! \def MAX_AREA_WIN_Y
+    \brief Definiuje maksymalna dlugosc okna
+*/
+#define MAX_AREA_WIN_Y 31
+
+/*! \def OUR_NAME
+    \brief Nasza nazwa
+*/
+#define OUR_NAME "Cokolwiek"
 
 #endif // DEFINES_H_

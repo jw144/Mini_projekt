@@ -108,12 +108,12 @@ void wczytaj_graczy(Area* mapa, Players* gracze, FILE** plik)
     int ch;
     int idx = 0;
     int temp = 1;
-    gracze->num_of_players = -1;
+    gracze->num_of_players = 0;
     do
     {
         ch = fgetc(*plik);
         gracze->num_of_players++;
-        if(gracze->num_of_players > 9) //Sprawdzenie ilosci graczy
+        if(gracze->num_of_players > 10) //Sprawdzenie ilosci graczy
         {
             program_error(mapa, gracze, BAD_INPUT, WRONG_DATA);
             return;
@@ -124,32 +124,32 @@ void wczytaj_graczy(Area* mapa, Players* gracze, FILE** plik)
         do
         {
             czy_poprawny_znak(mapa, gracze, ch, &isgraph);
-            gracze->parameters[gracze->num_of_players].nazwa_gracza[idx] = ch;
+            gracze->parameters[gracze->num_of_players - 1].nazwa_gracza[idx] = ch;
 
             idx++;
             temp = 1;
             if(temp * SIZE_PLAYER_NAME - 2 < idx)
             {
                 temp++;
-              realloc_nazwa(mapa, gracze, temp);
+                realloc_nazwa(mapa, gracze, temp);
             }
             ch = fgetc(*plik);
         }while(ch != ' ');
-        gracze->parameters[gracze->num_of_players].nazwa_gracza[idx] = '\0';
+        gracze->parameters[gracze->num_of_players - 1].nazwa_gracza[idx] = '\0';
 
         ch = fgetc(*plik);
         czy_poprawny_znak(mapa, gracze, ch, &isdigit);
-        gracze->parameters[gracze->num_of_players].numer = ch - '0';
+        gracze->parameters[gracze->num_of_players - 1].numer = ch - '0';
 
         ch = fgetc(*plik);
         czy_poprawny_znak(mapa, gracze, ch, &isspace);
 
         ch = fgetc(*plik);
-        gracze->parameters[gracze->num_of_players].punkty = 0;
+        gracze->parameters[gracze->num_of_players - 1].punkty = 0;
         do
         {
             czy_poprawny_znak(mapa, gracze, ch, &isdigit);
-            gracze->parameters[gracze->num_of_players].punkty = gracze->parameters[gracze->num_of_players].punkty * 10 + ch - '0';
+            gracze->parameters[gracze->num_of_players - 1].punkty = gracze->parameters[gracze->num_of_players - 1].punkty * 10 + ch - '0';
             ch = fgetc(*plik);
         }while(ch >= '0' && ch <= '9');
 
@@ -201,7 +201,7 @@ void zapisz_plik(Area* mapa, Players* gracze, FILE** plik)
         }
         fprintf(*plik, "\n");
     }
-    for(int i = 0; i <= gracze->num_of_players; i++)
+    for(int i = 0; i < gracze->num_of_players; i++)
     {
         fprintf(*plik, "%s %d %d\n", gracze->parameters[i].nazwa_gracza, gracze->parameters[i].numer, gracze->parameters[i].punkty);
     }
