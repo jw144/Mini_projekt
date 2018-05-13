@@ -23,7 +23,7 @@ void wybor_trybu(Area* mapa, Players* gracze, int argc, char** argv)
 
 int manual_placement(Area* mapa, Players* gracze, Par highlight, Parameters* My)
 {
-    if(mapa->tab[highlight.x][highlight.y].gracz == 0)
+    if(mapa->tab[highlight.x][highlight.y].gracz == 0 && mapa->tab[highlight.x][highlight.y].ryby == 1)
     {
         mapa->tab[highlight.x][highlight.y].gracz = My->numer;
         My->punkty +=  mapa->tab[highlight.x][highlight.y].ryby;
@@ -36,7 +36,7 @@ int manual_placement(Area* mapa, Players* gracze, Par highlight, Parameters* My)
 int manual_movement(Area* mapa, Players* gracze, Par highlight, Parameters* My, int temp)
 {
     static Par pingwin; //Uzywam statica, bo juz nie chce mi sie kombinowac, moze w przyszlosci zmienie
-    if(temp == 0 && mapa->tab[highlight.x][highlight.y].gracz == My->gracz) //Wybiera pingwina
+    if(temp == 0 && mapa->tab[highlight.x][highlight.y].gracz == My->numer) //Wybiera pingwina
     {
         pingwin.x = highlight.x;
         pingwin.y = highlight.y;
