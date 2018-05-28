@@ -15,6 +15,9 @@ typedef struct tile
 
     //! Numer gracza w danej komorce
     char gracz;
+
+    //! Przechowuje informacjê o wartoœci pola podczas stawiania/przesuwania pingwina
+    char najlepsze_pole;
 } Tile;
 
 /*!
@@ -70,6 +73,27 @@ typedef struct par
     //!Wspolrzedna y
     int y;
 }Par;
+
+/*!
+    \brief Typedef struktury z parametrami najlepszego ruchu
+*/
+typedef struct best_movement
+{
+    //!Wspolrzedna x
+    int x;
+
+    //!Wspolrzedna y
+    int y;
+
+    //!Wynik komorki
+    int best;
+
+    //!Wspolrzedna x poruszanego pingwina
+    int last_x;
+
+    //!Wspolrzedna y poruszanego pingwina
+    int last_y;
+}Best_movement;
 
 /*! \def SIZE_PLAYER_NAME
     \brief Definiuje tymczasowa dlugosc nazwy gracza

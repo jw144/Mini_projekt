@@ -72,7 +72,6 @@ void wczytaj_plansze(Area* mapa, Players* gracze, FILE** plik)
 
             ch = fgetc(*plik);
             czy_poprawny_znak(mapa, gracze, ch, &isspace);  //Usuwa spacje pomiedzy danymi i sprawdza czy to spacja
-
             wczytaj_plansze_ryba(mapa, gracze, plik, i, j);
             wczytaj_plansze_gracz(mapa, gracze, plik, i, j);
         }
@@ -112,6 +111,10 @@ void wczytaj_graczy(Area* mapa, Players* gracze, FILE** plik)
     do
     {
         ch = fgetc(*plik);
+        if(ch == EOF)
+        {
+            return;
+        }
         gracze->num_of_players++;
         if(gracze->num_of_players > 10) //Sprawdzenie ilosci graczy
         {
@@ -143,15 +146,14 @@ void wczytaj_graczy(Area* mapa, Players* gracze, FILE** plik)
 
         ch = fgetc(*plik);
         czy_poprawny_znak(mapa, gracze, ch, &isspace);
-
         ch = fgetc(*plik);
         gracze->parameters[gracze->num_of_players - 1].punkty = 0;
-        do
+        while(ch >= '0' && ch <= '9')
         {
             czy_poprawny_znak(mapa, gracze, ch, &isdigit);
             gracze->parameters[gracze->num_of_players - 1].punkty = gracze->parameters[gracze->num_of_players - 1].punkty * 10 + ch - '0';
             ch = fgetc(*plik);
-        }while(ch >= '0' && ch <= '9');
+        }
 
         if(ch != '\n' && ch != EOF)
         {
