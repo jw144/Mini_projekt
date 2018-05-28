@@ -359,6 +359,17 @@ void best_movement_place(Area* mapa, Players* gracze, Parameters* My, int a, int
 
 void enemy_penguins(Area* mapa, Players* gracze, Parameters* My, int a, int b)
 {
+
+    
+        if(mapa->tab[a][b].ryby < 2)
+
+    {
+
+        return;
+
+    }
+
+    
     for(int k = a; k >= 0; k--)
     {
         if(mapa->tab[k][b].gracz != 0)
